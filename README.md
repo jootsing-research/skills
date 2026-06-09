@@ -64,7 +64,6 @@ When an agent starts a phone task through MCP, the skills should point it at thi
 ```text
 list_phones({})
 get_phone_status({"phone_id": "..."})
-select_phone({"phone_id": "..."})
 enable_switch_control({"phone_id": "..."})  # when the connected MCP exposes this tool
 ```
 
@@ -74,9 +73,8 @@ REST API equivalents use `https://api.tapkit.ai/v1` with the `X-API-Key` header:
 |--------|----------|---------------|
 | List phones | `list_phones` | `GET /phones` |
 | Check Switch Control and connection state | `get_phone_status` | `GET /phones/{phone_id}/status` |
-| Select/activate a phone | `select_phone` | `POST /phones/{phone_id}/select` |
 
-`select_phone` is the public REST-backed activation path. If a connected MCP also exposes `enable_switch_control`, use it when status says Switch Control is disabled, then re-check with `get_phone_status`.
+If a connected MCP exposes `enable_switch_control`, use it when status says Switch Control is disabled, then re-check with `get_phone_status`. If that tool is not available, report that Switch Control must be enabled or configured before phone control can proceed.
 
 ## Requirements
 

@@ -17,9 +17,7 @@ MCP tools use named arguments. Examples in this skill may use compact shorthand 
 list_phones() -> choose phone_id -> get_phone_status(phone_id) -> use phone_id on every call
 ```
 
-If `get_phone_status(phone_id)` reports that Switch Control is disabled, call `enable_switch_control(phone_id)` when that MCP tool is available, then check status again. If the current MCP server does not expose `enable_switch_control`, call `select_phone(phone_id)` instead; selecting a phone activates it on the connected Mac and is the REST API path for enabling/switching Switch Control.
-
-**`select_phone(phone_id)`** is optional during normal single-phone control because actions on an inactive phone may auto-activate it. Use it deliberately in multi-phone setups, before a long sequence of actions on one phone, or after a status/error message says the phone is connected but not active.
+If `get_phone_status(phone_id)` reports that Switch Control is disabled, call `enable_switch_control(phone_id)` when that MCP tool is available, then check status again. If that tool is not available or status still says Switch Control is disabled, stop and tell the user Switch Control must be enabled or configured before phone control can proceed.
 
 ### REST API Equivalents
 
@@ -29,9 +27,8 @@ Use the REST API with `https://api.tapkit.ai/v1` and the `X-API-Key` header:
 |--------|----------|---------------|
 | List available phones | `list_phones()` | `GET /phones` |
 | Check connection and Switch Control | `get_phone_status(phone_id)` | `GET /phones/{phone_id}/status` |
-| Select/activate a phone | `select_phone(phone_id)` | `POST /phones/{phone_id}/select` |
 
-There is no separate public REST endpoint named `enable_switch_control` in the current API docs; use `POST /phones/{phone_id}/select`, then verify with `GET /phones/{phone_id}/status`.
+There is no separate public REST endpoint named `enable_switch_control` in the current API docs. Use the MCP helper when it is available, then verify with `GET /phones/{phone_id}/status`.
 
 ## Use Tools First, Navigate Second
 
@@ -87,7 +84,6 @@ Screenshots are resized so you see them at the same resolution as the coordinate
 
 ### Device
 - `list_phones()` — List all phones with connection status, IDs, and dimensions. **Call this first.**
-- `select_phone(phone_id)` — Eagerly switch Switch Control to a phone (optional — auto-activates on use)
 - `enable_switch_control(phone_id)` — Enable Switch Control on the Mac for a phone when that MCP tool is available
 - `screenshot(phone_id)` — Get current screen as an image
 - `get_phone_status(phone_id)` — Get real-time status: connection, Switch Control, screen lock, streaming, dimensions

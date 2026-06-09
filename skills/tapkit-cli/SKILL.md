@@ -25,7 +25,7 @@ tapkit phones
 tapkit phone set "iPhone 15 Pro"
 ```
 
-If only one phone is connected, it auto-selects — just start using commands.
+If only one phone is connected, commands use it automatically.
 
 ## Core Loop
 
