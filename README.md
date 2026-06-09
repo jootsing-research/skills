@@ -6,8 +6,8 @@ Skills that teach AI agents how to control iPhones and navigate iOS apps.
 
 If you're using TapKit with **Claude Code** or **Codex**, use the official plugins instead — they bundle these skills with MCP tools for a seamless experience:
 
-- [TapKit for Claude Code](https://github.com/Jootsing-Research/tapkit-claude-code)
-- [TapKit for Codex](https://github.com/Jootsing-Research/tapkit-codex)
+- [TapKit for Claude Code](https://github.com/Jootsing-Research/tapkit-plugins-claude)
+- [TapKit for Codex](https://github.com/Jootsing-Research/tapkit-plugins-codex)
 
 ## When to Use This Repo
 
@@ -56,6 +56,27 @@ Skills are Markdown files (`SKILL.md`) that follow the open [Agent Skills](https
 - **Task strategy** — what to do with the app (workflows, engagement playbooks)
 
 The agent reads the skill, then uses TapKit tools (via MCP or CLI) to execute actions on the phone.
+
+## MCP/API Call References
+
+When an agent starts a phone task through MCP, the skills should point it at this setup flow:
+
+```text
+list_phones({})
+get_phone_status({"phone_id": "..."})
+select_phone({"phone_id": "..."})
+enable_switch_control({"phone_id": "..."})  # when the connected MCP exposes this tool
+```
+
+REST API equivalents use `https://api.tapkit.ai/v1` with the `X-API-Key` header:
+
+| Intent | MCP tool | REST endpoint |
+|--------|----------|---------------|
+| List phones | `list_phones` | `GET /phones` |
+| Check Switch Control and connection state | `get_phone_status` | `GET /phones/{phone_id}/status` |
+| Select/activate a phone | `select_phone` | `POST /phones/{phone_id}/select` |
+
+`select_phone` is the public REST-backed activation path. If a connected MCP also exposes `enable_switch_control`, use it when status says Switch Control is disabled, then re-check with `get_phone_status`.
 
 ## Requirements
 

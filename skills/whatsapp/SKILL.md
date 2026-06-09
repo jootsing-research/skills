@@ -9,6 +9,10 @@ WhatsApp is a private messaging and calling app. On TJ's iPhone 12 Mac Mini, it 
 
 Always use the TapKit loop: screenshot, identify the target, act, then screenshot again. Prefer pasting text via the phone clipboard over tapping individual keyboard keys.
 
+## TapKit Setup Reminder
+
+Before acting in this app, follow the core TapKit setup: `list_phones()` -> choose `phone_id` -> `get_phone_status(phone_id)`. If Switch Control is disabled, call `enable_switch_control(phone_id)` when that MCP tool is available; otherwise call `select_phone(phone_id)` and re-check status. All TapKit examples in this skill assume every MCP tool call includes that `phone_id`.
+
 ## Bottom Tabs
 
 The bottom tab bar has five icons, ordered left to right:
