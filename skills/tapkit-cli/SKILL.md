@@ -54,14 +54,13 @@ Always prefer a direct command over manual navigation:
 # Open an app — don't scroll through home screens
 tapkit open "Settings"
 
-# Search — don't swipe and hunt visually
-tapkit spotlight "calculator"
-
 # Go home — don't swipe up from bottom
 tapkit home
 ```
 
 Only use tap/swipe for things **inside** an app where no shortcut exists.
+
+If direct app opening is unavailable or fails, press Home, take a screenshot, and navigate visually through Home Screen pages or App Library. Take a new screenshot after each swipe, then tap the visible app icon using its current coordinates.
 
 ## Commands
 
@@ -91,16 +90,18 @@ tapkit drag <x1> <y1> <x2> <y2>   # drag between points
 ### Input
 
 ```bash
-tapkit type "Hello world"           # type into focused field (tap field first!)
-tapkit escape                       # dismiss keyboard, alert, popup
+tapkit tap <x> <y>                  # focus the intended field first
+tapkit type "Hello world"           # type into the focused field
+tapkit screenshot --base64          # verify the exact rendered text
 ```
+
+Stop after verification. Do not tap Return, Search, Go, Send, Done, or any equivalent submission control unless the user separately authorized that submission.
 
 ### Navigation
 
 ```bash
 tapkit open "Twitter"               # open app by name
 tapkit home                         # press home button
-tapkit spotlight "Notes"            # open Spotlight, optionally with query
 ```
 
 ### Device
@@ -145,13 +146,10 @@ tapkit drag 10 672 300 672
 # Pull to refresh
 tapkit drag 300 200 300 600
 
-# Dismiss a popup — find "X" or "Cancel" and tap it
-
-# Close keyboard
-tapkit escape
-
 # Tab bars at bottom are main navigation — tap the icons
 ```
+
+To dismiss a popup or keyboard, take a screenshot and locate a visible, safe dismissal control such as **X**, **Cancel**, Back, or a keyboard-hide button. Tap that control at its current coordinates and screenshot again to verify. If the app visibly supports gesture dismissal, use an explicit swipe and verify it. Never use Return, Search, Go, Send, or Done merely to dismiss the keyboard because those controls may submit.
 
 ## Text Input
 
@@ -159,19 +157,23 @@ tapkit escape
 # 1. Tap the text field
 tapkit tap 300 400
 
-# 2. Wait for keyboard, then type
+# 2. Wait for the keyboard and verify that the intended field is focused
+tapkit screenshot --base64
+
+# 3. Type into the focused field
 tapkit type "your search query"
 
-# 3. Tap the blue keyboard button (Search/Go/Send/Done)
-tapkit tap 350 800
-
-# To clear a field: triple-tap to select all, then type new value
+# 4. Verify the exact rendered text, then stop
+tapkit screenshot --base64
 ```
+
+Submission is a separate action. Only after the user explicitly authorizes it, take a fresh screenshot, confirm the rendered text is still exact, and tap the current visible submission control. Screenshot again to verify the result.
 
 ## Important
 
 - **Be precise with coordinates.** Off by 50px can mean tapping the wrong element
 - **Always verify with screenshots.** Never assume an action succeeded
+- **For every text entry, focus the intended field, type, screenshot, and verify the rendered text before stopping.** Never submit automatically
 - **Apps take 1-2 seconds to load.** If screenshot looks unchanged, wait and screenshot again
 - **If something doesn't work after 2-3 tries, try a different approach**
 - **You cannot handle Face ID, CAPTCHAs, or biometric prompts** — tell the user
