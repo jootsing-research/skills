@@ -13,7 +13,7 @@ If you're using TapKit with **Claude Code** or **Codex**, use the official plugi
 
 This repo is for agents and tools that **don't have an official plugin** — Cursor, OpenClaw, GitHub Copilot, and [35+ other agents](https://github.com/vercel-labs/skills) that support the open [Agent Skills](https://agentskills.io) standard.
 
-Install the skills, then connect TapKit via the [MCP server](https://github.com/Jootsing-Research/tapkit-mcp) or [CLI](https://github.com/Jootsing-Research/tapkit-cli).
+Install the skills, then connect TapKit via the [MCP server](https://github.com/Jootsing-Research/tapkit-mcp).
 
 ## Install
 
@@ -76,11 +76,10 @@ REST API equivalents use `https://api.tapkit.ai/v1` with the `X-API-Key` header:
 ## Requirements
 
 - [TapKit](https://tapkit.ai) account with a connected iPhone
-- TapKit [MCP server](https://github.com/Jootsing-Research/tapkit-mcp) or [CLI](https://github.com/Jootsing-Research/tapkit-cli)
+- TapKit [MCP server](https://github.com/Jootsing-Research/tapkit-mcp)
 
 ## Links
 
 - [TapKit](https://tapkit.ai) — Get started
 - [TapKit MCP](https://github.com/Jootsing-Research/tapkit-mcp) — MCP server for AI agents
-- [TapKit CLI](https://github.com/Jootsing-Research/tapkit-cli) — Control iPhones from the terminal
 - [Documentation](https://docs.tapkit.ai) — Full docs
